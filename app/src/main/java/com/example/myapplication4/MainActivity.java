@@ -24,6 +24,32 @@ public class MainActivity extends AppCompatActivity {
         DiskPersonStore personStore = new DiskPersonStore(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // скоріш за все тут треба буде оновити список після додавання учня чи вчителя на іншому екрані
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     public void saveText(View view){
 
         FileOutputStream fos = null;
