@@ -11,5 +11,5 @@ public interface PersonStore {
     void addStudent(String firstName, String lastNAme, int grade);
 
     List<Person> getAll();
-    void removeRecord(int id);
+    void removeRecord(long id);
 }

@@ -27,7 +27,7 @@ public class MemoryPersonStore implements PersonStore {
         return people;
     }
     @Override
-    public void removeRecord(int id) {
+    public void removeRecord(long id) {
         for (int i = 0; i < people.size(); i++) {
             if (people.get(i).id == id) {
                 people.remove(i);

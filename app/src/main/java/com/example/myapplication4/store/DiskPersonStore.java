@@ -1,7 +1,9 @@
 package com.example.myapplication4.store;
 
 import android.content.Context;
+import android.widget.Toast;
 
+import com.example.myapplication4.MainActivity;
 import com.example.myapplication4.entity.Person;
 import com.example.myapplication4.entity.Student;
 import com.example.myapplication4.entity.Teacher;
@@ -30,7 +32,7 @@ public class DiskPersonStore implements PersonStore {
     @Override
     public void addTeacher(String firstName, String lastName, String specialty) {
         List<Teacher> teachers = loadTeachers();
-        int id = teachers.size();
+        long id = System.currentTimeMillis();
         Teacher teacher = new Teacher(id, firstName, lastName, specialty);
         teachers.add(teacher);
         saveTeachers(teachers);
@@ -39,7 +41,10 @@ public class DiskPersonStore implements PersonStore {
     @Override
     public void addStudent(String firstName, String lastName, int grade) {
         List<Student> students = loadStudents();
-        int id = students.size();
+        if (students == null) {
+            students = new ArrayList<>();
+        }
+        long id = System.currentTimeMillis();
         Student student = new Student(id, firstName, lastName, grade);
         students.add(student);
         saveStudents(students);
@@ -54,7 +59,7 @@ public class DiskPersonStore implements PersonStore {
     }
 
     @Override
-    public void removeRecord(int id) {
+    public void removeRecord(long id) {
         List<Teacher> teachers = loadTeachers();
         List<Student> students = loadStudents();
 
@@ -84,6 +89,7 @@ public class DiskPersonStore implements PersonStore {
             System.out.println("Запис з ID " + id + " видалено.");
         } else {
             System.out.println("Неможливо знайти запис з ID " + id);
+            Toast.makeText(context, "Елемент з ID " + id + " не знайдено", Toast.LENGTH_SHORT).show();
         }
     }
 
