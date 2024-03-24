@@ -3,7 +3,7 @@ package com.example.myapplication4.store;
 import android.content.Context;
 
 import com.example.myapplication4.db.PersonDatabase;
-import com.example.myapplication4.db.PersonDatabaseFactory;
+import com.example.myapplication4.db.PersonDatabaseProvider;
 import com.example.myapplication4.db.students.StudentEntityMapper;
 import com.example.myapplication4.entity.Person;
 import com.example.myapplication4.entity.PersonFilter;
@@ -15,7 +15,7 @@ public class DatabasePersonStore implements PersonStore {
     private final StudentEntityMapper studentEntityMapper;
 
     public DatabasePersonStore(Context context) {
-        this.personDatabase = new PersonDatabaseFactory().create(context);
+        this.personDatabase = new PersonDatabaseProvider().provide(context);
         this.studentEntityMapper = new StudentEntityMapper();
     }
 
