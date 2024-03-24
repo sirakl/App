@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication4.R;
 import com.example.myapplication4.entity.Person;
+import com.example.myapplication4.entity.Student;
+import com.example.myapplication4.entity.Teacher;
 
 import java.util.List;
 
@@ -40,7 +42,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Person person = dataList.get(position);
         holder.nameTextView.setText(person.firstName);
-        holder.ageTextView.setText(person.lastName);
+        if (person instanceof Student) {
+            holder.ageTextView.setText(String.valueOf(((Student) person).grade));
+        } else if (person instanceof Teacher) {
+            holder.ageTextView.setText(((Teacher) person).specialty);
+        }
 
         holder.removeButton.setOnClickListener(v -> {
             if (removeClickListener != null) {
