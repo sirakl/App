@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.myapplication4.entity.Person;
+import com.example.myapplication4.entity.PersonFilter;
 import com.example.myapplication4.store.DiskPersonStore;
-import com.example.myapplication4.store.MyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  {
     private MyAdapter adapter;
     private DiskPersonStore personStore;
+    private PersonFilter personFilter = PersonFilter.ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity  {
         List<Person> allPeople = personStore.getAll();
         adapter = new MyAdapter(allPeople, id -> {
                 personStore.removeRecord(id);
-                List<Person> updatedList = personStore.getAll();
+                List<Person> updatedList = personStore.getFiltered(personFilter);
                 adapter.setDataList(updatedList);
             });
 
@@ -73,16 +74,19 @@ public class MainActivity extends AppCompatActivity  {
                     switch (selectedFilter) {
                         case "Студенты":
                             // Фильтровать только студентов
-                            adapter.setDataList(personStore.getStudents());
+                            personFilter = PersonFilter.STUDENTS;
+                            adapter.setDataList(personStore.getFiltered(PersonFilter.STUDENTS));
                             Toast.makeText(this, "Выбраны студенты", Toast.LENGTH_SHORT).show();
                             break;
                         case "Учителя":
                             // Фильтровать только учителей
-                            adapter.setDataList(personStore.getTeachers());
+                            personFilter = PersonFilter.TEACHERS;
+                            adapter.setDataList(personStore.getFiltered(PersonFilter.TEACHERS));
                             Toast.makeText(this, "Выбраны учителя", Toast.LENGTH_SHORT).show();
                             break;
                         case "Все":
                             // Показать всех студентов и учителей
+                            personFilter = PersonFilter.ALL;
                             adapter.setDataList(personStore.getAll());
                             Toast.makeText(this, "Выбраны все", Toast.LENGTH_SHORT).show();
                             break;

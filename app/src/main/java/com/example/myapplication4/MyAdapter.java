@@ -1,4 +1,4 @@
-package com.example.myapplication4.store;
+package com.example.myapplication4;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication4.R;
 import com.example.myapplication4.entity.Person;
 import com.example.myapplication4.entity.Student;
 import com.example.myapplication4.entity.Teacher;

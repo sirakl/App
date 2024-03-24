@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.example.myapplication4.MainActivity;
 import com.example.myapplication4.entity.Person;
+import com.example.myapplication4.entity.PersonFilter;
 import com.example.myapplication4.entity.Student;
 import com.example.myapplication4.entity.Teacher;
 import com.google.gson.Gson;
@@ -51,25 +52,28 @@ public class DiskPersonStore implements PersonStore {
     }
 
     @Override
-    public List<Person> getStudents() {
-        List<Person> result = new ArrayList<>();
-        result.addAll(loadStudents());
-        return result;
-    }
-
-    @Override
-    public List<Person> getTeachers() {
-        List<Person> result = new ArrayList<>();
-        result.addAll(loadTeachers());
-        return result;
-    }
-
-    @Override
     public List<Person> getAll() {
         List<Person> allPeople = new ArrayList<>();
         allPeople.addAll(loadTeachers());
         allPeople.addAll(loadStudents());
         return allPeople;
+    }
+
+    @Override
+    public List<Person> getFiltered(PersonFilter personFilter) {
+        List<Person> result = new ArrayList<>();
+        switch (personFilter) {
+            case STUDENTS:
+                result.addAll(loadStudents());
+                return result;
+            case TEACHERS:
+                result.addAll(loadTeachers());
+                return result;
+            case ALL:
+                return getAll();
+            default:
+                throw new IllegalArgumentException("Unknown person filter");
+        }
     }
 
     @Override
