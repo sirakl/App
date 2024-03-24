@@ -10,6 +10,10 @@ public interface PersonStore {
 
     void addStudent(String firstName, String lastNAme, int grade);
 
+    List<Person> getStudents();
+
+    List<Person> getTeachers();
+
     List<Person> getAll();
     void removeRecord(long id);
 }

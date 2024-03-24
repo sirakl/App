@@ -4,23 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication4.entity.Person;
 import com.example.myapplication4.store.DiskPersonStore;
-import com.example.myapplication4.store.FilterDialogFragment;
 import com.example.myapplication4.store.MyAdapter;
-import com.example.myapplication4.store.PersonStore;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,8 +64,32 @@ public class MainActivity extends AppCompatActivity  {
         recyclerView.setAdapter(adapter);
     }
     private void showFilterDialog() {
-        FilterDialogFragment dialog = new FilterDialogFragment();
-        dialog.show(getSupportFragmentManager(), "FilterDialog");
+        new AlertDialog.Builder(this)
+                .setTitle("Выберите тип")
+                .setItems(R.array.filter_options, (dialog, which) -> {
+                    String[] filters = getResources().getStringArray(R.array.filter_options);
+                    String selectedFilter = filters[which];
+                    // Действия в зависимости от выбранного фильтра
+                    switch (selectedFilter) {
+                        case "Студенты":
+                            // Фильтровать только студентов
+                            adapter.setDataList(personStore.getStudents());
+                            Toast.makeText(this, "Выбраны студенты", Toast.LENGTH_SHORT).show();
+                            break;
+                        case "Учителя":
+                            // Фильтровать только учителей
+                            adapter.setDataList(personStore.getTeachers());
+                            Toast.makeText(this, "Выбраны учителя", Toast.LENGTH_SHORT).show();
+                            break;
+                        case "Все":
+                            // Показать всех студентов и учителей
+                            adapter.setDataList(personStore.getAll());
+                            Toast.makeText(this, "Выбраны все", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                })
+                .create()
+                .show();
     }
 
     @Override

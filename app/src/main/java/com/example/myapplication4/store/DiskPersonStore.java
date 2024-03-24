@@ -51,6 +51,20 @@ public class DiskPersonStore implements PersonStore {
     }
 
     @Override
+    public List<Person> getStudents() {
+        List<Person> result = new ArrayList<>();
+        result.addAll(loadStudents());
+        return result;
+    }
+
+    @Override
+    public List<Person> getTeachers() {
+        List<Person> result = new ArrayList<>();
+        result.addAll(loadTeachers());
+        return result;
+    }
+
+    @Override
     public List<Person> getAll() {
         List<Person> allPeople = new ArrayList<>();
         allPeople.addAll(loadTeachers());

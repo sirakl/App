@@ -8,16 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myapplication4.entity.Student;
 import com.example.myapplication4.store.DiskPersonStore;
-import com.example.myapplication4.store.MemoryPersonStore;
 import com.example.myapplication4.store.PersonStore;
 
 public class StudentAddActivity extends AppCompatActivity {
     private EditText nameEditText;
     private EditText classEditText;
     private Button saveButton;
-    private PersonStore memoryPersonStore;
     private PersonStore diskPersonStore;
 
     @Override
@@ -29,7 +26,6 @@ public class StudentAddActivity extends AppCompatActivity {
         classEditText = findViewById(R.id.editTextTextMultiLine);
         saveButton = findViewById(R.id.button4);
 
-        memoryPersonStore = new MemoryPersonStore();
         diskPersonStore = new DiskPersonStore(this);
 
 
@@ -45,7 +41,6 @@ public class StudentAddActivity extends AppCompatActivity {
                     Toast.makeText(StudentAddActivity.this, "Введите имя и класс", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                memoryPersonStore.addStudent(name, "", Integer.parseInt(classText));
                 diskPersonStore.addStudent(name, "", Integer.parseInt(classText));
 
                 Toast.makeText(StudentAddActivity.this, "Студент успешно добавлен", Toast.LENGTH_SHORT).show();
