@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity  {
     private MyAdapter adapter;
     private DiskPersonStore personStore;
     private PersonFilter personFilter = PersonFilter.ALL;
+    private static final int REQUEST_CODE_ADD_STUDENT = 1;
+    private static final int REQUEST_CODE_ADD_TEACHER = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         personStore = new DiskPersonStore(this);
         Button button=findViewById(R.id.button);
-        button.setOnClickListener(this::onAddButtonClick);
+        button.setOnClickListener(view -> showSelectDialog());
+
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -50,10 +53,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
     }
-    public void onAddButtonClick(View view) {
-        Intent intent = new Intent(this, AddPersonActivityActivity.class);
-        startActivity(intent);
-    }
+
     protected void onCreate1(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -64,6 +64,24 @@ public class MainActivity extends AppCompatActivity  {
         MyAdapter adapter = new MyAdapter(dataList, null);
         recyclerView.setAdapter(adapter);
     }
+    private void showSelectDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Выберите тип записи");
+
+        String[] options = {"Студент", "Учитель"};
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                Intent intent = new Intent(MainActivity.this, StudentAddActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_ADD_STUDENT);
+            } else if (which == 1) {
+                Intent intent = new Intent(MainActivity.this, TeacherAddActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_ADD_TEACHER);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void showFilterDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Выберите тип")
