@@ -41,6 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Person person = dataList.get(position);
         holder.nameTextView.setText(person.firstName);
+        holder.lastTextView.setText(person.lastName);
         if (person instanceof Student) {
             holder.ageTextView.setText(String.valueOf(((Student) person).grade));
         } else if (person instanceof Teacher) {
@@ -63,12 +64,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView ageTextView;
+        TextView lastTextView;
         Button removeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
             ageTextView = itemView.findViewById(R.id.ageTextView);
+            lastTextView=itemView.findViewById(R.id.lastTextView);
             removeButton = itemView.findViewById(R.id.removeButton);
         }
     }

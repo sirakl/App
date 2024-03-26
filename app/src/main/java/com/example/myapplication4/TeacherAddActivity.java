@@ -14,6 +14,7 @@ import com.example.myapplication4.store.PersonStore;
 
 public class TeacherAddActivity extends AppCompatActivity {
     private EditText nameEditText;
+    private EditText lastEditText;
     private EditText specialtyEditText;
     private Button saveButton;
     private PersonStore diskPersonStore;
@@ -25,6 +26,7 @@ public class TeacherAddActivity extends AppCompatActivity {
 
         nameEditText = findViewById(R.id.editTextText);
         specialtyEditText = findViewById(R.id.editTextTextMultiLine);
+        lastEditText=findViewById(R.id.sawtooth);
         saveButton = findViewById(R.id.button4);
         diskPersonStore=new DiskPersonStore(this);
 
@@ -33,13 +35,14 @@ public class TeacherAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = nameEditText.getText().toString();
                 String specialty = specialtyEditText.getText().toString();
+                String lastName = lastEditText.getText().toString();
 
                 if(name.isEmpty() || specialty.isEmpty()){
                     Toast.makeText(TeacherAddActivity.this,"Введіть ім'я і спеціальність",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                diskPersonStore.addTeacher(name,"",specialty);
+                diskPersonStore.addTeacher(name,lastName,specialty);
                 Toast.makeText(TeacherAddActivity.this,"Вчителя додано успішно", Toast.LENGTH_SHORT).show();
                 finish();
 
